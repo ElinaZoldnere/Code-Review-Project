@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+
+    <changeSet author = "javaguru" id = "6">
+        <sql>
+            INSERT INTO employees(first_name, last_name, bonus_coefficient)
+            VALUES('Mister', 'X', 1.5);
+
+            INSERT INTO employees(first_name, last_name, bonus_coefficient)
+            VALUES('Mister', 'Y', 1.2);
+
+            INSERT INTO employees(first_name, last_name, bonus_coefficient)
+            VALUES('Mister', 'Z', 1.2);
+        </sql>
+    </changeSet>
+
+    <changeSet author = "javaguru" id = "7">
+        <sql>
+            INSERT INTO rewards(employee_id, job_type, reward_status)
+            SELECT ep.id, 'speech', null
+            FROM employees as ep
+            WHERE ep.first_name = 'Mister' and ep.last_name = 'X';
+
+            INSERT INTO rewards(employee_id, job_type, reward_status)
+            SELECT ep.id, 'lesson', null
+            FROM employees as ep
+            WHERE ep.first_name = 'Mister' and ep.last_name = 'Y';
+
+            INSERT INTO rewards(employee_id, job_type, reward_status)
+            SELECT ep.id, 'help', null
+            FROM employees as ep
+            WHERE ep.first_name = 'Mister' and ep.last_name = 'Z';
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,66 @@
+plugins {
+	id 'org.springframework.boot' version '3.5.4'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.palantir.docker' version '0.36.0'
+}
+
+ext {
+	set("springBootVersion", "3.4.5")
+}
+
+dependencies {
+
+	implementation('mysql:mysql-connector-java:8.0.33')
+	implementation('org.hibernate:hibernate-core:6.5.0.Final')
+	implementation ('org.liquibase:liquibase-core:4.27.0')
+	implementation('com.h2database:h2:2.2.224')
+
+	implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
+
+	compileOnly('org.projectlombok:lombok:1.18.32')
+	annotationProcessor('org.projectlombok:lombok:1.18.32')
+
+	testCompileOnly('org.projectlombok:lombok:1.18.32')
+	testAnnotationProcessor('org.projectlombok:lombok:1.18.32')
+
+	testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
+
+}
+
+test {
+	useJUnitPlatform()
+}
+
+clean.doFirst {
+	delete "${projectDir}/logs/"
+	println "${projectDir}/logs/"
+
+	delete "${projectDir}/out/"
+	println "${projectDir}/out/"
+
+	delete "${projectDir}/build/"
+	println "${projectDir}/build/"
+}
+
+jar {
+	enabled = false
+}
+
+bootJar {
+	enabled = true
+	archiveBaseName = 'reward-payment-app'
+	archiveVersion = '1.0.1'
+}
+
+dockerPrepare {
+	dependsOn bootJar
+}
+
+docker {
+	dependsOn bootJar
+	name "reward-payment-app:1.0.1"
+	files "build/libs/reward-payment-app-1.0.1.jar"
+	files 'wait-for-it.sh'
+	buildArgs(['JAR_FILE': "reward-payment-app-1.0.1.jar"])
+}

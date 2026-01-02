@@ -1,0 +1,31 @@
+# Java
+*.class
+*.jar
+# except
+!gradle/wrapper/gradle-wrapper.jar
+
+# Gradle
+.gradle
+**/build/
+**/logs/
+
+# IntelliJ IDEA
+/.idea
+**/out/
+*.iws
+*.iml
+*.ipr
+
+# OS
+**/.DS_Store
+**/Thumbs.db
+
+# log
+*.log
+
+# Environment
+**/.env*
+.envrc
+
+# Personal files
+/documentation/notes/

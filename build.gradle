@@ -1,0 +1,31 @@
+subprojects {
+
+    apply plugin: 'java'
+
+    version = '0.0.1-SNAPSHOT'
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    clean.doFirst {
+        delete "${projectDir}/logs/"
+        println "${projectDir}/logs/"
+
+        delete "${projectDir}/out/"
+        println "${projectDir}/out/"
+
+        delete "${projectDir}/build/"
+        println "${projectDir}/build/"
+    }
+
+}

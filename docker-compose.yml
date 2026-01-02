@@ -1,0 +1,43 @@
+version: '1'
+
+networks:
+  mynetwork:
+
+services:
+  reward-calculation-db:
+    networks: [mynetwork]
+    container_name: reward-calculation-db
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: reward_calculation_db
+    ports:
+      - "3000:3306"
+
+  reward-payment-db:
+    networks: [mynetwork]
+    container_name: reward-payment-db
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: reward_payment_db
+    ports:
+      - "3001:3306"
+
+  reward-calculation-app:
+    networks: [mynetwork]
+    container_name: reward-calculation-app
+    image: reward-calculation-app:1.0.1
+    ports:
+      - "8080:8080"
+    depends_on:
+      - reward-calculation-db
+
+  reward-payment-app:
+    networks: [mynetwork]
+    container_name: reward-payment-app
+    image: reward-payment-app:1.0.1
+    ports:
+      - "8090:8090"
+    depends_on:
+      - reward-payment-db

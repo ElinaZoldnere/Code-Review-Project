@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+
+    <changeSet author = "javaguru" id = "5">
+        <sql>
+            INSERT INTO tariffs(job_type, amount)
+            VALUES('speech', 10.0);
+
+            INSERT INTO tariffs(job_type, amount)
+            VALUES('lesson', 20.0);
+
+            INSERT INTO tariffs(job_type, amount)
+            VALUES('help', 30.0);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
